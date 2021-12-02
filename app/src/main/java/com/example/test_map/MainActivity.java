@@ -1,28 +1,24 @@
 package com.example.test_map;
 
-import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends ListActivity {
+import net.daum.mf.map.api.MapView;
+
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
 
-        ListAdapter adapter = new DemoListAdapter(this, DemoListItem.DEMO_LIST_ITEMS);
-        setListAdapter(adapter);
-    }
+        MapView mapView = new MapView(this);
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        DemoListItem demo = (DemoListItem) getListAdapter().getItem(position);
-        startActivity(new Intent(this, demo.activity));
+        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+        mapViewContainer.addView(mapView);
     }
 
 }
+
