@@ -8,18 +8,32 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener {
+
+    Button location;
+
+    private GpsTracker gpsTracker;
 
     private static final String LOG_TAG = "MainActivity";
     private MapView mapView;
@@ -27,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +60,17 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         }else {
             checkRunTimePermission();
         }
+
+        //현재위치로 이동하는 버튼 생성
+        location = (Button)findViewById(R.id.location_btn);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gpsTracker = new GpsTracker(MainActivity.this);
+            }
+        });
     }
+
 
     @Override
     protected void onDestroy() {
@@ -233,4 +259,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
     }
 
+    public void location(View v) {
+
+
+    }
 }
